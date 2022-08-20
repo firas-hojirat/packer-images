@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # install-packer: install packer for the current architecture,
 #  in the directory specified as 1st argument, in the version specified as 2nd argument
 
-packer_install_dir="${1:?First argument missing: directory where to install packer.}"
+packer_install_dir="${1:-/usr/local/bin}"
 packer_version="${2:?Second argument missing: version of packer to install.}"
 
 set -eu -o pipefail

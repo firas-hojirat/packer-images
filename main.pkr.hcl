@@ -9,13 +9,5 @@ packer {
       version = "0.14.1"
       source  = "github.com/rgl/windows-update"
     }
-    azure = {
-      version = "1.3.0"
-      source  = "github.com/hashicorp/azure"
-    }
-    docker = {
-      version = "1.0.7"
-      source  = "github.com/hashicorp/docker"
-    }
   }
 }

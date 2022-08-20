@@ -65,13 +65,7 @@ Function AddToPathEnv($path) {
     Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath | Out-Null
 }
 
-# Install OpenSSH (from Windows Features)
-Write-Output "= Setting up OpenSSH Server"
 
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-Set-Service -Name sshd -StartupType 'Automatic'
-Start-Service sshd
-New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 | Out-Null
 
 # Install Docker-CE if missing
 try {
@@ -331,24 +325,6 @@ foreach($k in $downloads.Keys) {
     }
 }
 
-# Special case for Powershell, we need to make sure powershell.exe and pwsh.exe are both available
-# On Windows Server, Windows Powershell 5.1 is installed by default (powershell.exe)
-# On nanoserver, Powershell Core 7 is installed by default (pwsh.ex)
-# https://docs.microsoft.com/en-us/powershell/scripting/whats-new/migrating-from-windows-powershell-51-to-powershell-7?view=powershell-7.2#using-powershell-7-side-by-side-with-windows-powershell-51
-Write-Output "== Ensure both Windows Powershell and Powershell Core are available"
-if ((Get-Host | Select-Object Version).Version.Major -eq 5) {
-    Write-Output "= Windows Powershell already present, installing Powershell Core..."
-    Invoke-Command {& "choco.exe" install pwsh --yes --no-progress --limit-output --fail-on-error-output;}
-    AddToPathEnv "C:\Program Files\PowerShell\7\"
-} else {
-    Write-Output "= Powershell Core already present, installing Windows Powershell..."
-    Invoke-Command {& "choco.exe" install powershell --yes --no-progress --limit-output --fail-on-error-output;}
-    AddToPathEnv "C:\Windows\System32\WindowsPowerShell\v1.0\"
-}
-Write-Output "= Windows Powershell & Powershell Core sanity checks:"
-Invoke-Command {& "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -command "(Get-Host).Version"}
-Invoke-Command {& "C:\Program Files\PowerShell\7\pwsh.exe" -command "(Get-Host).Version"}
-
 ## Add a set of pre-defined SSH keys to allow faster agent startups
 $temp_authorized_keys_file = 'C:\custom_auth_keys'
 DownloadFile "$env:OPENSSH_AUTHORIZED_KEYS_URL" "$temp_authorized_keys_file"
@@ -369,17 +345,3 @@ Select-Object -Property DeviceID, DriveType, VolumeName,
 
 Write-Host "== Patch(s) installed"
 Get-HotFix | Format-Table -Property HotFixID, Description, InstalledOn
-
-Write-Host "== Sanity Check of installed tools"
-Write-Host "- Path environment"
-Write-Host (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
-Write-Host '- Sanity check for docker'
-& docker -v ## Client only
-foreach($k in $downloads.Keys) {
-    $download = $downloads[$k]
-    if($download.ContainsKey('sanityCheck')) {
-        Write-Host "- Sanity check for $k"
-        Invoke-Command $download['sanityCheck']
-    }
-}
-Write-Host "== End of Sanity Check"

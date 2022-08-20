@@ -17,18 +17,6 @@ variable "aws_region" {
   type    = string
   default = "us-east-2"
 }
-variable "azure_client_id" {
-  type    = string
-  default = env("AZURE_CLIENT_ID")
-}
-variable "azure_client_secret" {
-  type    = string
-  default = env("AZURE_CLIENT_SECRET")
-}
-variable "azure_subscription_id" {
-  type    = string
-  default = env("AZURE_SUBSCRIPTION_ID")
-}
 variable "image_version" {
   type    = string
   default = "0.0.1" # Default is a valid version to not fail azure validation
@@ -52,8 +40,4 @@ variable "provision_env_file" {
   type        = string
   description = "Path (absolute or relative to this packer template) to the YAML file with the list of environment variables forwarded to provisioners (mainly tools versions)"
   default     = "provisioning/tools-versions.yml"
-}
-variable "docker_namespace" {
-  type    = string
-  default = "jenkinsciinfra"
 }
