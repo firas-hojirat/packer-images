@@ -15,10 +15,10 @@ variable "aws_region" {
 data "amazon-ami" "windows-2022" {
   filters = {
     virtualization-type = "hvm"
-    name                = "*Windows_Server-2022*English-64Bit-Base*"
+    name                = "*Windows_Server-2022-English-Full-Base*"
     root-device-type    = "ebs"
   }
-  owners      = ["amazon"]
+  owners      = ["801119661308"]
   most_recent = true
   # Access Region Configuration
   region = var.aws_region
@@ -43,4 +43,5 @@ source "amazon-ebs" "windows" {
   winrm_password = local.winrm_password
   winrm_use_ssl  = true
   winrm_insecure = true
+  force_deregister = true
 }
