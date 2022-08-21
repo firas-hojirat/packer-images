@@ -6,7 +6,7 @@ variable "aws_instance_type" {
 
 variable "aws_region" {
   type    = string
-  default = "eu-east-1"
+  default = "us-east-1"
 }
 
 # This example uses a amazon-ami data source rather than a specific AMI.
