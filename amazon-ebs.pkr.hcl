@@ -33,14 +33,14 @@ source "amazon-ebs" "windows" {
   # from Packer is allowed. Without this file being set, Packer will not
   # connect to the instance.
   #
-  # user_data = templatefile("${path.root}/scripts/bootstrap_win.pkrtpl.hcl", {
-  #   winrm_username = local.winrm_username,
-  #   winrm_password = local.winrm_password
-  # })
-  user_data_file = "${path.root}/scripts/bootstrap_win.txt"
+  user_data = templatefile("${path.root}/scripts/bootstrap_win.pkrtpl.hcl", {
+    winrm_username = local.winrm_username,
+    winrm_password = local.winrm_password
+  })
+  # user_data_file = "${path.root}/scripts/bootstrap_win.txt"
   communicator   = "winrm"
   winrm_username = local.winrm_username
-  # winrm_password = local.winrm_password
+  winrm_password = local.winrm_password
   winrm_use_ssl  = true
   winrm_insecure = true
 }
