@@ -1,43 +1,9 @@
-# Defines these 2 elements as "variables" instead of "locals" to allow using them in data sources
-# as per https:#github.com/hashicorp/packer/issues/11011
-variable "agent_os_type" {
-  type        = string
-  description = "Which operating system to use for this agent template build?"
-}
-variable "agent_os_version" {
-  type        = string
-  description = "Which version of the operating system 'var.agent_os_type' to use for this agent template build?"
-}
-variable "architecture" {
-  type        = string
-  description = "CPU architecture ID of the build with the following possible values: [amd64 (default), arm64]"
-  default     = "amd64"
-}
-variable "aws_region" {
-  type    = string
-  default = "us-east-2"
-}
-variable "image_version" {
-  type    = string
-  default = "0.0.1" # Default is a valid version to not fail azure validation
-}
-variable "image_type" {
-  type        = string
-  description = "Which kind of Packer builder to use (e.g. cloud platform): [amazon-ebs (default), azure-arm, docker]"
-  default     = "amazon-ebs"
-}
-variable "build_type" {
-  type        = string
-  description = "Type of build e.g. is it a development build (from a contributor machine), a ci build (pull request or branch build) or a production build (principal branch build on ci)?"
-  default     = "dev" # value in ["dev", "ci", "prod"]
-}
-variable "scm_ref" {
-  type        = string
-  description = "SCM (e.g. Git...) reference of the current build. Can be a commit hash (short or long), a branch name or a tag name."
-  default     = "HEAD"
-}
-variable "provision_env_file" {
-  type        = string
-  description = "Path (absolute or relative to this packer template) to the YAML file with the list of environment variables forwarded to provisioners (mainly tools versions)"
-  default     = "provisioning/tools-versions.yml"
+locals {
+  os_type         = "windows"
+  os_version      = "2022"
+  image_name      = "packer-pyautomation-${local.os_type}-${local.os_version}"
+  manifest_path   = "${path.cwd}/manifests/"
+  manifest_output = "${local.manifest_path}${local.image_name}.json"
+  winrm_username  = "Administrator"
+  winrm_password  = "SuperS3cr3t!!!!"
 }

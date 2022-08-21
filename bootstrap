@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+export ASDF_DIR="${HOME}/.asdf"
+
+if ! [ -d "$ASDF_DIR" ]; then
+    git clone https://github.com/asdf-vm/asdf.git "${ASDF_DIR}"
+fi
+
+source "${ASDF_DIR}"
+
+cat .tool-versions | awk '{print $1}' | xargs -I '{}' asdf plugin-add '{}'
+
+asdf install
