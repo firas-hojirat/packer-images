@@ -1,12 +1,12 @@
 
 variable "aws_instance_type" {
-  type        = string
-  default     = "t2.micro"
+  type    = string
+  default = "t2.micro"
 }
 
 variable "aws_region" {
-  type        = string
-  default     = "eu-east-1"
+  type    = string
+  default = "eu-east-1"
 }
 
 # This example uses a amazon-ami data source rather than a specific AMI.
@@ -32,13 +32,15 @@ source "amazon-ebs" "windows" {
   # This user data file sets up winrm and configures it so that the connection
   # from Packer is allowed. Without this file being set, Packer will not
   # connect to the instance.
-  user_data = templatefile("${path.root}/scripts/bootstrap_win.pkrtpl.hcl", {
-    winrm_username = local.winrm_username,
-    winrm_password = local.winrm_password
-  })
+  #
+  # user_data = templatefile("${path.root}/scripts/bootstrap_win.pkrtpl.hcl", {
+  #   winrm_username = local.winrm_username,
+  #   winrm_password = local.winrm_password
+  # })
+  user_data_file = "${path.root}/scripts/bootstrap_win.txt"
   communicator   = "winrm"
   winrm_username = local.winrm_username
-  winrm_password = local.winrm_password
+  # winrm_password = local.winrm_password
   winrm_use_ssl  = true
   winrm_insecure = true
 }

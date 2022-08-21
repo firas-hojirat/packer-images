@@ -20,14 +20,20 @@ build {
   provisioner "powershell" {
     # elevated_user     = local.winrm_username
     # elevated_password = local.winrm_password
-    script            = "${path.root}/scripts/Instal-Chocolatey.ps1"
+    script = "${path.root}/scripts/Install-Chocolatey.ps1"
   }
 
-    provisioner "powershell" {
+  provisioner "powershell" {
     # elevated_user     = local.winrm_username
     # elevated_password = local.winrm_password
-    script            = "${path.root}/scripts/Install-ChocolateyPackages.ps1"
+    script = "${path.root}/scripts/Install-ChocolateyPackages.ps1"
   }
+
+  # provisioner "powershell" {
+  #   # elevated_user     = local.winrm_username
+  #   # elevated_password = local.winrm_password
+  #   script = "${path.root}/scripts/EC2-Sysprep.ps1"
+  # }
 
   post-processor "manifest" {
   }

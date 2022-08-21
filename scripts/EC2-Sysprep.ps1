@@ -1,1 +1,1 @@
-& '$env:ProgramFiles\amazon\ec2launch\ec2launch.exe' sysprep --shutdown=true
+& "$env:ProgramFiles\Amazon\EC2Launch\EC2Launch.exe" sysprep --shutdown=true
