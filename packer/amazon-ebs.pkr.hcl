@@ -41,7 +41,7 @@ source "amazon-ebs" "windows" {
   communicator   = "winrm"
   winrm_username = local.winrm_username
   winrm_password = local.winrm_password
-  winrm_use_ssl  = true
-  winrm_insecure = true
+  winrm_use_ssl    = true
+  winrm_insecure   = true
   force_deregister = true
 }

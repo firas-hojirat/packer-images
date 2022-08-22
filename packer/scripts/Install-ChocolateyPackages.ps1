@@ -18,6 +18,3 @@ choco install windows-sdk-10.1 --yes
 
 Write-Output "+++ Installing Java Runtime Environment - (version 11)… +++"
 choco install temurin11jre --yes
-
-Write-Output "+++ Installing Allure… +++"
-scoop install allure

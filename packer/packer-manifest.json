@@ -1,0 +1,23 @@
+{
+  "builds": [
+    {
+      "name": "windows",
+      "builder_type": "amazon-ebs",
+      "build_time": 1661116545,
+      "files": null,
+      "artifact_id": "us-east-1:ami-019e8963262d96e67",
+      "packer_run_uuid": "3e730d30-f668-9f31-cfa3-1269485564c5",
+      "custom_data": null
+    },
+    {
+      "name": "windows",
+      "builder_type": "amazon-ebs",
+      "build_time": 1661118855,
+      "files": null,
+      "artifact_id": "us-east-1:ami-06e61462855c1472f",
+      "packer_run_uuid": "1f00ba24-9447-2b48-200f-ccf96ff1e0ec",
+      "custom_data": null
+    }
+  ],
+  "last_run_uuid": "1f00ba24-9447-2b48-200f-ccf96ff1e0ec"
+}
